@@ -34,7 +34,7 @@ ansible-doc -t module ansodium
     keypair: true
 ```
 
-Where `pubkey` and `data` is required.
+Here `keypair` specify to generate a random keypair
 
 Output format : 
 ```json
