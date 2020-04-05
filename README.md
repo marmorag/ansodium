@@ -29,7 +29,7 @@ ansible-doc -t module ansodium
 
 #### Generate keypair
 ```yaml
-- name: run the module
+- name: generate keypair
   ansodium:
     keypair: true
 ```
@@ -50,7 +50,7 @@ Output format :
 #### Encrypt
 
 ```yaml
-- name: run the module
+- name: encrypt data
   ansodium:
     pubkey: "<public key to encrypt with>"
     data: "<data you want to encrypt>"
@@ -72,7 +72,7 @@ Output format :
 #### Decrypt:
 
 ```yaml
-- name: run the module
+- name: decrypt data
   ansodium:
     encrypt: false 
     prikey: "<private key to decrypt with>"
