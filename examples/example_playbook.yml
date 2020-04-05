@@ -1,0 +1,31 @@
+---
+- hosts: localhost
+  become: false
+  gather_facts: false
+  tasks:
+    - name: generate key pair
+      ansodium:
+        keypair: true
+      register: keypair
+
+    - debug:
+        var: keypair.public_key
+
+    - name: encrypt data
+      ansodium:
+        pubkey: "{{ keypair.public_key }}"
+        data: "some secret data"
+      register: output
+
+    - debug:
+        var: output
+
+    - name: decrypt data
+      ansodium:
+        encrypt: false
+        prikey: "{{ keypair.private_key }}"
+        data: "{{ output.encrypted }}"
+      register: output
+
+    - debug:
+        var: output

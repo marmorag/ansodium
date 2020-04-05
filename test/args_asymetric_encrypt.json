@@ -1,0 +1,6 @@
+{
+    "ANSIBLE_MODULE_ARGS": {
+        "pubkey": "TAWnzuulV/a5zgM9YihJvbxJJX6y2oxQkiOdB4scd1w=",
+        "data": "some secret data"
+    }
+}
