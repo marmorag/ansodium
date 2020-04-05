@@ -44,21 +44,45 @@ author:
 
 EXAMPLES = '''
 # Encrypt data
-- name: Test with a message
-  ysodium:
-    pubkey: asuperpubkey
+- name: Generate keypair
+  ansodium:
+    keypair: true
+  register: keypair
+
+- name: Encrypt a simple message
+  ansodium:
+    pubkey: keypair.public_key
     data: "a super set of data to be encrypted"
+  register: output  
+
+- name: Decrypt data
+  ansodium:
+    encrypt: false
+    prikey: keypair.private_key
+    data: "{{ output.encrypted }}"
 '''
 
 RETURN = '''
 original_data:
-    description: The original data param that was passed in
+    description: The original data param that was passed in (so readable data or encrypted depending on what method is used)
     type: str
-    returned: always
+    returned: when data is encrypted or decrypted
 encrypted:
-    description: The encrypted data that the module generates
+    description: The encrypted data
     type: str
-    returned: always
+    returned: on encrypt data
+decrypted:
+    description: The decrypted data
+    type: str
+    returned: on decrypt data
+public_key:
+    description: The generated public key (b64 encoded)
+    type: str
+    returned: on key pair generation
+private_key:
+    description: The generated private key (b64 encoded)
+    type: str
+    returned: on key pair generation
 '''
 
 from ansible.module_utils.basic import AnsibleModule
