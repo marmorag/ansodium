@@ -7,7 +7,7 @@ Simple sodium wrapper module for ansible, based on [`PyNaCl`](https://pynacl.rea
 
 Refering to [ansible docs](https://docs.ansible.com/ansible/latest/dev_guide/developing_locally.html#adding-a-module-locally) to install a module locally, either :
 
-- add directory to `ÀNSIBLE_LIBRARY` environment variable
+- add directory to `ANSIBLE_LIBRARY` environment variable
 - put it in  `~/.ansible/plugins/modules/`
 - put in in `/usr/share/ansible/plugins/modules/`
 
