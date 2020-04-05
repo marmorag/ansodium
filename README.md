@@ -9,10 +9,10 @@ Refering to [ansible docs](https://docs.ansible.com/ansible/latest/dev_guide/dev
 - put it in  `~/.ansible/plugins/modules/`
 - put in in `/usr/share/ansible/plugins/modules/`
 
-Or, to use it in your playbook/role only:
+Or, to use it in one playbook/role only:
 
-- in a `library` directory in your directory containing your __playbook__ 
-- in a `library` directory in your directory containing your __role__ 
+- in a `library` directory in the directory containing your __playbook__ 
+- in a `library` directory in the directory containing your __role__ 
 
 ```bash
 git clone git@github.com:/marmorag/ansodium.git 
