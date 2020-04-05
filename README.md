@@ -1,8 +1,6 @@
 ## ansodium
 Simple sodium wrapper module for ansible, based on [`PyNaCl`](https://pynacl.readthedocs.io/en/stable/)
 
-
-
 ### Install
 
 Refering to [ansible docs](https://docs.ansible.com/ansible/latest/dev_guide/developing_locally.html#adding-a-module-locally) to install a module locally, either :
@@ -11,6 +9,19 @@ Refering to [ansible docs](https://docs.ansible.com/ansible/latest/dev_guide/dev
 - put it in  `~/.ansible/plugins/modules/`
 - put in in `/usr/share/ansible/plugins/modules/`
 
+```bash
+git clone git@github.com:/marmorag/ansodium.git 
+cd ./ansodium
+
+mkdir -p ~/.ansible/plugins/modules
+cp ./ansodium.py ~/.ansible/plugins/modules
+```
+
+then you can check that module is correctly installed with
+
+```bash
+ansible-doc -t module ansodium
+```
 
 ### Usage
 
