@@ -1,0 +1,24 @@
+namespace: marmorag
+name: ansodium
+version: 1.0.0
+readme: README.md
+
+authors:
+- Guillaume Marmorat <guillaume.marmorat@gmail.com>
+
+description: simple wrapper module around libsodium using pynacl
+
+license_file: 'License.md'
+
+tags: ['sodium', 'development', 'system']
+
+dependencies: {}
+
+# The URL of the originating SCM repository
+repository: https://github.com/marmorag/ansodium
+# The URL to any online docs
+documentation: https://github.com/marmorag/ansodium
+# The URL to the homepage of the collection/project
+homepage: https://github.com/marmorag/ansodium
+# The URL to the collection issue tracker
+issues: https://github.com/marmorag/ansodium/issues

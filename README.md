@@ -1,7 +1,23 @@
 ## ansodium
-Simple sodium wrapper module for ansible, based on [`PyNaCl`](https://pynacl.readthedocs.io/en/stable/)
+[Ansible Galaxy collection]() repository.\
+Simple sodium wrapper module for `ansible`, based on [`PyNaCl`](https://pynacl.readthedocs.io/en/stable/)
 
 ### Install
+---
+
+Install it via ansible-galaxy (recommended):
+
+```bash
+ansible-galaxy install marmorag.ansodium
+```
+
+You will need the `PyNacl` Python module to be installed.
+```bash
+pip install pynacl
+```
+
+---
+Install it manually:
 
 Refering to [ansible docs](https://docs.ansible.com/ansible/latest/dev_guide/developing_locally.html#adding-a-module-locally) to install a module, either :
 
@@ -10,7 +26,7 @@ Refering to [ansible docs](https://docs.ansible.com/ansible/latest/dev_guide/dev
 - put in in `/usr/share/ansible/plugins/modules/`
 
 ```bash
-git clone git@github.com:/marmorag/ansodium.git 
+git clone https://github.com/marmorag/ansodium 
 cd ./ansodium
 
 mkdir -p ~/.ansible/plugins/modules
@@ -27,6 +43,8 @@ In any case, you can check that module is correctly installed with
 ```bash
 ansible-doc -t module ansodium
 ```
+
+Of course `PyNacl` python package is required in that case too.
 
 ### Usage
 

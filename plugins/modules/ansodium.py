@@ -1,8 +1,9 @@
 #!/usr/bin/python
+from __future__ import (absolute_import, division, print_function)
 
-# Copyright: (c) 2018, Terry Jones <terry.jones@example.org>
+__metaclass__ = type
+
 # GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
-
 ANSIBLE_METADATA = {
     'metadata_version': '1.0',
     'status': ['preview'],
@@ -21,25 +22,36 @@ description:
     - "The main purpose of the module is to provide a simple access to sodium hash library."
 
 options:
+    encrypt:
+        description:
+            - Wether to encrypt or decrypt data.
+        required: false
+        type: bool
+        default: True
     keypair:
         description:
             - If you want to generate a keypair
         required: false
+        type: bool
+        default: False
     pubkey:
         description:
             - The public key to encrypt your data with
         required: false
+        type: str
     prikey:
         description:
             - The private key to decrypt your data with
         required: false
+        type: str
     data:
         description:
             - Data you want to be encrypted
         required: false
+        type: str
 
 author:
-    - marmorag
+    - Guillaume Marmorat (@marmorag)
 '''
 
 EXAMPLES = '''
@@ -53,7 +65,7 @@ EXAMPLES = '''
   ansodium:
     pubkey: keypair.public_key
     data: "a super set of data to be encrypted"
-  register: output  
+  register: output
 
 - name: Decrypt data
   ansodium:
@@ -84,11 +96,10 @@ private_key:
     type: str
     returned: on key pair generation
 '''
-
 from ansible.module_utils.basic import AnsibleModule
-from base64 import b64encode, b64decode
 
 try:
+    from base64 import b64encode, b64decode
     from nacl import encoding, public
 
     HAS_LIB = True
