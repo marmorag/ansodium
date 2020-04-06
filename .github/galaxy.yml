@@ -1,0 +1,20 @@
+name: Galaxy
+
+on:
+  push:
+    branch: master
+
+jobs:
+  runs-on: ubuntu-latest
+  steps:
+    - name: install ansible
+      run: apt install ansible
+
+    - name: authenticate to ansibe galaxy
+      run: ansible-galaxy login --github-token ${{ secrets.GITHUB_TOKEN }}
+
+    - name: build galaxy collections
+      run: ansible-galaxy collection build
+
+    - name: publish galaxy collections
+      run: ansible-galaxy collection publish ./marmorag-ansodium-*

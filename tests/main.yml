@@ -2,6 +2,8 @@
 - hosts: localhost
   become: false
   gather_facts: false
+  collections:
+    - marmorag.ansodium
   tasks:
     - name: generate key pair
       ansodium:
