@@ -1,4 +1,0 @@
-- name: ansodium - Install python dependencies
-  pip:
-    name: pynacl
-    state: present
