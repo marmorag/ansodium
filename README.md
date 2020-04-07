@@ -1,5 +1,5 @@
 ## ansodium
-[Ansible Galaxy collection]() repository.\
+[Ansible Galaxy collection](https://galaxy.ansible.com/marmorag/ansodium) repository.\
 Simple sodium wrapper module for `ansible`, based on [`PyNaCl`](https://pynacl.readthedocs.io/en/stable/)
 
 ### Install
@@ -8,13 +8,16 @@ Simple sodium wrapper module for `ansible`, based on [`PyNaCl`](https://pynacl.r
 Install it via ansible-galaxy (recommended):
 
 ```bash
-ansible-galaxy install marmorag.ansodium
+ansible-galaxy collection install marmorag.ansodium
 ```
+###### *__NOTE__: Installing collections with ansible-galaxy is only supported in ansible 2.9+*
 
 You will need the `PyNacl` Python module to be installed.
 ```bash
 pip install pynacl
 ```
+
+Or use the provided `install` roles
 
 ---
 Install it manually:
