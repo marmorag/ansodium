@@ -14,6 +14,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: install ansible
+        run: apt install ansible
+
       - name: ansible sanity test
         run: ansible-test sanity -v --docker --python 3.7 ansodium
 #        working-directory: ${{env.directory}}
