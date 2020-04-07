@@ -4,7 +4,7 @@ version: 1.0.1
 readme: README.md
 
 authors:
-- Guillaume Marmorat <guillaume.marmorat@gmail.com>
+- Guillaume Marmorat <guillaume.marmorat(at)gmail.com>
 
 description: simple wrapper module around libsodium using pynacl
 
