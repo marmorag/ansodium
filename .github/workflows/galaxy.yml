@@ -1,20 +1,28 @@
+---
 name: Galaxy
 
 on:
-  push:
-    branch: master
+  pull_request:
+    types: [closed]
+    branch:
+      - master
 
 jobs:
-  runs-on: ubuntu-latest
-  steps:
-    - name: install ansible
-      run: apt install ansible
+  release:
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.merged
 
-    - name: authenticate to ansibe galaxy
-      run: ansible-galaxy login --github-token ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions@checkout@v2
 
-    - name: build galaxy collections
-      run: ansible-galaxy collection build
+      - name: install ansible
+        run: apt install ansible
 
-    - name: publish galaxy collections
-      run: ansible-galaxy collection publish ./marmorag-ansodium-*
+      - name: authenticate to ansibe galaxy
+        run: ansible-galaxy login --github-token ${{ secrets.GITHUB_TOKEN }}
+
+      - name: build galaxy collections
+        run: ansible-galaxy collection build
+
+      - name: publish galaxy collections
+        run: ansible-galaxy collection publish ./marmorag-ansodium-*
