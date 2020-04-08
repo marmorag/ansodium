@@ -27,6 +27,7 @@ jobs:
 
       - name: Ansible - version
         run: ansible --version
+        working-dir: tests
 
       - uses: actions/checkout@v2
 
@@ -37,5 +38,4 @@ jobs:
         run: docker run --mount type=bind,source="$(pwd)"/.,target=/ansible/ansible_collections/marmorag/ansodium ${{ env.registry }}/marmorag/ansodium/ansodium-test
 
       - name: Ansible - run test playbook
-        run: ansible-playbook main.yml
-        working-directory: tests
+        run: ansible-playbook tests/main.yml -e 'ansible_python_interpreter=/usr/bin/python3'
