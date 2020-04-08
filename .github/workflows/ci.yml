@@ -15,6 +15,9 @@ jobs:
       - name: collections directory & symlink
         run: mkdir -p ~/.ansible/collections/ansodium && ln -s "$(pwd)" ~/.ansible/collections/ansodium
 
+      - name: ls
+        run: ls ~/.ansible/collections/ansodium
+
       - uses: actions/checkout@v2
 
       - name: docker login
