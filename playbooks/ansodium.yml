@@ -1,8 +1,0 @@
----
-- hosts: localhost
-  become: false
-  gather_facts: false
-  collections:
-    - marmorag.ansodium
-  roles:
-    - { role: marmorag.ansodium.install, tags: ['install'] }
