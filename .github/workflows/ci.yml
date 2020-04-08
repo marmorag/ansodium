@@ -14,6 +14,8 @@ jobs:
       collection_path: ~/.ansible/collections/ansible_collections/marmorag
 
     steps:
+      - uses: actions/checkout@v2
+
       - name: Install - setup Python
         uses: actions/setup-python@v1
         with:
@@ -28,8 +30,6 @@ jobs:
       - name: Ansible - version
         run: ansible --version
         working-directory: tests
-
-      - uses: actions/checkout@v2
 
       - name: Docker - login
         run: echo ${{ secrets.PACKAGE_TOKEN }} | docker login ${{ env.registry }} -u marmorag --password-stdin
