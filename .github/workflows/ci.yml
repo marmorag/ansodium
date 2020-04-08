@@ -10,13 +10,14 @@ jobs:
     runs-on: ubuntu-latest
     env:
       registry: docker.pkg.github.com
+      collection_path: ~/.ansible/collections/ansible_collections/marmorag
 
     steps:
       - name: collections directory & symlink
-        run: mkdir -p ~/.ansible/collections && ln -s "$(pwd)" ~/.ansible/collections/ansodium
+        run: mkdir -p ${{ env.collection_path }} && ln -s "$(pwd)" ${{ env.collection_path }}/ansodium
 
       - name: ls
-        run: ls ~/.ansible/collections/ansodium
+        run: ls ${{ env.collection_path }}/ansodium
 
       - uses: actions/checkout@v2
 
