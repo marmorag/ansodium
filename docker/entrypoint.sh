@@ -6,7 +6,12 @@ if [[ -z ${TEST_TYPE+x} ]]; then
 fi
 
 if [[ ${TEST_TYPE} == "sanity" ]]; then
-    exit $(ansible-test sanity -v --venv --python 3.7 ansodium)
+    ansible-test sanity -v --venv --python 3.7 ansodium
+    exit $?
 elif [[ ${TEST_TYPE} == "playbook" ]]; then
-    exit $(ansible tests/main.yml)
+    ansible-playbook tests/main.yml
+    exit $?
 fi
+
+echo "Unknown value : ${TEST_TYPE}"
+exit 1

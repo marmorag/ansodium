@@ -1,6 +1,10 @@
 FROM python:3.7-slim-buster
 
-RUN mkdir -p /ansible/ansible_collections/marmorag/ansodium
+RUN mkdir -p /ansible/ansible_collections/marmorag/ansodium && \
+    mkdir -p /docker
+
+COPY entrypoint.sh /docker/entrypoint.sh
+
 RUN pip install \
         ansible \
         pyyaml \
@@ -10,4 +14,4 @@ RUN pip install \
 
 WORKDIR /ansible/ansible_collections/marmorag/ansodium
 
-CMD ['/ansible/ansible_collections/marmorag/ansodium/docker/entrypoint.sh']
+CMD ['cd /ansible/ansible_collections/marmorag/ansodium && /docker/entrypoint.sh']
