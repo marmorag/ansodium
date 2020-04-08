@@ -10,4 +10,4 @@ RUN pip install \
 
 WORKDIR /ansible/ansible_collections/marmorag/ansodium
 
-CMD ['/ansible/ansible_collections/marmorag/ansodium/entrypoint.sh']
+CMD ['/ansible/ansible_collections/marmorag/ansodium/docker/entrypoint.sh']
