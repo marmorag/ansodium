@@ -16,8 +16,8 @@ jobs:
       - name: collections directory & symlink
         run: mkdir -p ${{ env.collection_path }} && ln -s "$(pwd)" ${{ env.collection_path }}/ansodium
 
-      - name: ls
-        run: ls ${{ env.collection_path }}/ansodium
+      - name: ansible version
+        run: ansible --version
 
       - uses: actions/checkout@v2
 
