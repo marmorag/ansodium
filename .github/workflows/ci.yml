@@ -15,9 +15,9 @@ jobs:
 
     steps:
       - name: Install - setup Python
-          uses: actions/setup-python@v1
-          with:
-            python-version: ${{ env.python_version }}
+        uses: actions/setup-python@v1
+        with:
+          python-version: ${{ env.python_version }}
 
       - name: Install - collections directory & symlink
         run: mkdir -p ${{ env.collection_path }} && ln -s "$(pwd)" ${{ env.collection_path }}/ansodium
@@ -37,4 +37,5 @@ jobs:
         run: docker run --mount type=bind,source="$(pwd)"/.,target=/ansible/ansible_collections/marmorag/ansodium ${{ env.registry }}/marmorag/ansodium/ansodium-test
 
       - name: Ansible - run test playbook
-        run: ansible-playbook tests/main.yml
+        run: ansible-playbook main.yml
+        working-directory: tests
