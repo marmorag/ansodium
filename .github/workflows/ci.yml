@@ -19,3 +19,9 @@ jobs:
 
       - name: ansible sanity test
         run: docker run --mount type=bind,source="$(pwd)"/.,target=/ansible/ansible_collections/marmorag/ansodium ${{ env.registry }}/marmorag/ansodium/ansodium-test
+
+      - name: ansible - install playbook
+        run: ansible-playbook playbooks/ansodium.yml
+
+      - name: ansible run test playbook
+        run: ansible-playbook tests/main.yml
