@@ -17,7 +17,7 @@ jobs:
       - name: Install - setup Python
         uses: actions/setup-python@v1
         with:
-          python-version: ${{ env.python_version }}
+        python-version: ${{ env.python_version }}
 
       - name: Install - collections directory & symlink
         run: mkdir -p ${{ env.collection_path }} && ln -s "$(pwd)" ${{ env.collection_path }}/ansodium
