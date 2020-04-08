@@ -27,7 +27,7 @@ jobs:
 
       - name: Ansible - version
         run: ansible --version
-        working-dir: tests
+        working-directory: tests
 
       - uses: actions/checkout@v2
 
