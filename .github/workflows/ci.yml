@@ -8,14 +8,14 @@ on:
 jobs:
   tests:
     runs-on: ubuntu-latest
-#    env:
-#      directory:
+    env:
+      registry: docker.pkg.github.com
 
     steps:
       - uses: actions/checkout@v2
 
       - name: docker login
-        run: echo ${{ secrets.PACKAGE_TOKEN }} | docker login docker.pkg.github.com -u marmorag --password-stdin
+        run: echo ${{ secrets.PACKAGE_TOKEN }} | docker login ${{ env.registry }} -u marmorag --password-stdin
 
       - name: ansible sanity test
-        run: docker run --mount type=bind,source="$(pwd)"/.,target=/ansible/ansible_collections/marmorag/ansodium ansodium-test
+        run: docker run --mount type=bind,source="$(pwd)"/.,target=/ansible/ansible_collections/marmorag/ansodium ${{ env.registry }}/marmorag/ansodium-test
