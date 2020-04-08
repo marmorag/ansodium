@@ -9,23 +9,32 @@ jobs:
   tests:
     runs-on: ubuntu-latest
     env:
+      python_version: 3.7
       registry: docker.pkg.github.com
       collection_path: ~/.ansible/collections/ansible_collections/marmorag
 
     steps:
-      - name: collections directory & symlink
+      - name: Install - setup Python
+          uses: actions/setup-python@v1
+          with:
+            python-version: ${{ env.python_version }}
+
+      - name: Install - collections directory & symlink
         run: mkdir -p ${{ env.collection_path }} && ln -s "$(pwd)" ${{ env.collection_path }}/ansodium
 
-      - name: ansible version
+      - name: Python - version
+        run: python --version
+
+      - name: Ansible - version
         run: ansible --version
 
       - uses: actions/checkout@v2
 
-      - name: docker login
+      - name: Docker - login
         run: echo ${{ secrets.PACKAGE_TOKEN }} | docker login ${{ env.registry }} -u marmorag --password-stdin
 
-      - name: ansible sanity test
+      - name: Ansible - sanity test
         run: docker run --mount type=bind,source="$(pwd)"/.,target=/ansible/ansible_collections/marmorag/ansodium ${{ env.registry }}/marmorag/ansodium/ansodium-test
 
-      - name: ansible run test playbook
+      - name: Ansible - run test playbook
         run: ansible-playbook tests/main.yml
