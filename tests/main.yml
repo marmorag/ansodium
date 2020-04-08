@@ -1,14 +1,8 @@
 ---
-- hosts:
-    - localhost
+- hosts: localhost
   become: false
   gather_facts: false
-  collections:
-    - marmorag.ansodium
   tasks:
-    - import_role:
-        name: marmorag.ansodium.install
-
     - name: set fact
       set_fact:
         original_data: "some secret data"
