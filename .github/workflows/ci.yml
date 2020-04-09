@@ -9,8 +9,6 @@ jobs:
   tests:
     runs-on: ubuntu-latest
     env:
-      python_version: 3.7
-      collection_path: ~/.ansible/collections/ansible_collections/marmorag
       docker_registry: docker.pkg.github.com
       docker_image: docker.pkg.github.com/marmorag/ansodium/ansodium-test
       docker_mount_path: /root/.ansible/collections/ansible_collections/marmorag/ansodium
