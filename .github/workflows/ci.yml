@@ -10,17 +10,21 @@ jobs:
     runs-on: ubuntu-latest
     env:
       python_version: 3.7
-      registry: docker.pkg.github.com
       collection_path: ~/.ansible/collections/ansible_collections/marmorag
+      docker_registry: docker.pkg.github.com
+      docker_image: docker.pkg.github.com/marmorag/ansodium/ansodium-test
 
     steps:
       - uses: actions/checkout@v2
 
       - name: Docker - login
-        run: echo ${{ secrets.PACKAGE_TOKEN }} | docker login ${{ env.registry }} -u marmorag --password-stdin
+        run: echo ${{ secrets.PACKAGE_TOKEN }} | docker login ${{ env.docker_registry }} -u ${{  }} --password-stdin
+
+      - name: Docker - pull image
+        run: docker pull ${{ env.docker_image }}
 
       - name: Ansible - sanity test
-        run: docker run --mount type=bind,source="$(pwd)"/.,target=/ansible/ansible_collections/marmorag/ansodium --env "TEST_TYPE=sanity" ${{ env.registry }}/marmorag/ansodium/ansodium-test
+        run: docker run --mount type=bind,source="$(pwd)"/.,target=/ansible/ansible_collections/marmorag/ansodium --env "TEST_TYPE=sanity" ${{ env.docker_image }}
 
       - name: Ansible - run test playbook
-        run: docker run --mount type=bind,source="$(pwd)"/.,target=/ansible/ansible_collections/marmorag/ansodium --env "TEST_TYPE=playbook" ${{ env.registry }}/marmorag/ansodium/ansodium-test
+        run: docker run --mount type=bind,source="$(pwd)"/.,target=/ansible/ansible_collections/marmorag/ansodium --env "TEST_TYPE=playbook" ${{ env.docker_image }}
