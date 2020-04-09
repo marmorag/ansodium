@@ -20,7 +20,7 @@ jobs:
         run: echo ${{ secrets.PACKAGE_TOKEN }} | docker login ${{ env.registry }} -u marmorag --password-stdin
 
       - name: Ansible - sanity test
-        run: docker run --mount type=bind,source="$(pwd)"/.,target=/ansible/ansible_collections/marmorag/ansodium ${{ env.registry }}/marmorag/ansodium/ansodium-test -e TEST_TYPE=sanity
+        run: docker run --mount type=bind,source="$(pwd)"/.,target=/ansible/ansible_collections/marmorag/ansodium --env "TEST_TYPE=sanity" ${{ env.registry }}/marmorag/ansodium/ansodium-test
 
       - name: Ansible - run test playbook
-        run: docker run --mount type=bind,source="$(pwd)"/.,target=/ansible/ansible_collections/marmorag/ansodium ${{ env.registry }}/marmorag/ansodium/ansodium-test -e TEST_TYPE=playbook
+        run: docker run --mount type=bind,source="$(pwd)"/.,target=/ansible/ansible_collections/marmorag/ansodium --env "TEST_TYPE=playbook" ${{ env.registry }}/marmorag/ansodium/ansodium-test
