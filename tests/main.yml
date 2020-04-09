@@ -5,32 +5,39 @@
   collections:
     - marmorag.ansodium
   tasks:
-    - import_role:
-        name: marmorag.ansodium.install
+    - name: set fact
+      set_fact:
+        original_data: "some secret data"
 
     - name: generate key pair
       ansodium:
         keypair: true
       register: keypair
 
-    - debug:
-        var: keypair.public_key
+    - assert:
+        that:
+          - "{{ keypair.public_key | length > 0 }}"
+          - "{{ keypair.private_key | length > 0}}"
 
     - name: encrypt data
       ansodium:
         pubkey: "{{ keypair.public_key }}"
-        data: "some secret data"
-      register: output
+        data: "{{ original_data }}"
+      register: encrypt_output
 
-    - debug:
-        var: output
+    - assert:
+        that:
+          - "{{ encrypt_output.original_data == original_data }}"
+          - "{{ encrypt_output.encrypted | length > 0 }}"
 
     - name: decrypt data
       ansodium:
         encrypt: false
         prikey: "{{ keypair.private_key }}"
-        data: "{{ output.encrypted }}"
-      register: output
+        data: "{{ encrypt_output.encrypted }}"
+      register: decrypt_output
 
-    - debug:
-        var: output
+    - assert:
+        that:
+          - "{{ decrypt_output.original_data == encrypt_output.encrypted }}"
+          - "{{ decrypt_output.decrypted == original_data }}"
