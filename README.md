@@ -2,7 +2,45 @@
 [Ansible Galaxy collection](https://galaxy.ansible.com/marmorag/ansodium) repository.\
 Simple sodium wrapper module for `ansible`, based on [`PyNaCl`](https://pynacl.readthedocs.io/en/stable/)
 
+### My use case
+
+In order to automate some Github related things, I have to use the [`Actions/Secrets`](https://developer.github.com/v3/actions/secrets/) endpoint.
+To create or update a secrets I needed to encrypt data using the [Sodium library](https://libsodium.gitbook.io/doc/) and I found nothing `Ansible` related to do that.
+Firstly I created a `NodeJS` script with [tweetsodium](https://github.com/github/tweetsodium), but it was not really usable in `Ansible` context.
+So, ... I writed down a module. For now it is deadly simple, it just generate Keypair, encrypt and decrypt, but it works.
+
+
+If you want an example of what it looks like, then this is the roles which embbed it:
+```yamlex
+- name: Github - fetch project public key
+  uri:
+    url: "{{ github_api_repo_url }}/actions/secrets/public-key"
+    headers:
+      Authorization: "token {{ github_personnal_token }}"
+    status_code: 200
+  register: github_pubkey
+
+- name: Github - Encrypt token
+  ansodium:
+    pubkey: "{{ github_pubkey.json.key }}"
+    data: "{{ secret_token }}"
+  register: encrypt_output
+
+- name: Github - Push new secrets
+  uri:
+    url: "{{ github_api_repo_url }}/actions/secrets/SECRET_TOKEN"
+    body:
+      encrypted_value: "{{ encrypt_output.encrypted }}"
+      key_id: "{{ github_pubkey.json.key_id }}"
+    body_format: json
+    method: PUT
+    status_code: 201,204
+    headers:
+      Authorization: "token {{ github_personnal_token }}"
+```
+
 ### Install
+
 ---
 
 Install it via ansible-galaxy (recommended):
@@ -18,6 +56,11 @@ pip install pynacl
 ```
 
 Or use the provided `install` roles
+
+```yamlex
+roles:
+    - { role: marmorag.ansodium.install }
+```
 
 ---
 Install it manually:
@@ -54,7 +97,7 @@ Of course `PyNacl` python package is required in that case too.
 ---
 
 #### Generate keypair
-```yaml
+```yamlex
 - name: generate keypair
   ansodium:
     keypair: true
@@ -75,7 +118,7 @@ Output format :
 ---
 #### Encrypt
 
-```yaml
+```yamlex
 - name: encrypt data
   ansodium:
     pubkey: "<public key to encrypt with>"
@@ -97,7 +140,7 @@ Output format :
 ---
 #### Decrypt:
 
-```yaml
+```yamlex
 - name: decrypt data
   ansodium:
     encrypt: false 

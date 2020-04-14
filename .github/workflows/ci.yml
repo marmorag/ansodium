@@ -1,0 +1,29 @@
+---
+name: CI
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    env:
+      docker_registry: docker.pkg.github.com
+      docker_image: docker.pkg.github.com/marmorag/ansodium/ansodium-test
+      docker_mount_path: /root/.ansible/collections/ansible_collections/marmorag/ansodium
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Docker - login
+        run: echo ${{ secrets.PACKAGE_TOKEN }} | docker login ${{ env.docker_registry }} -u ${{ secrets.PACKAGE_USER }} --password-stdin
+
+      - name: Docker - pull image
+        run: docker pull ${{ env.docker_image }}
+
+      - name: Ansible - sanity test
+        run: docker run --mount type=bind,source="$(pwd)"/.,target=${{ env.docker_mount_path }} --env "TEST_TYPE=sanity" ${{ env.docker_image }}
+
+      - name: Ansible - run test playbook
+        run: docker run --mount type=bind,source="$(pwd)"/.,target=${{ env.docker_mount_path }} --env "TEST_TYPE=playbook" ${{ env.docker_image }}

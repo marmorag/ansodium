@@ -108,7 +108,7 @@ except ImportError:
 
 
 class AnsibleSodium:
-    def __init__(self, module: AnsibleModule):
+    def __init__(self, module):
         self.module = module
         self.result = dict(
             changed=False,
