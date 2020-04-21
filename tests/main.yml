@@ -41,3 +41,7 @@
         that:
           - "{{ decrypt_output.original_data == encrypt_output.encrypted }}"
           - "{{ decrypt_output.decrypted == original_data }}"
+
+    - name: Test from role
+      import_role:
+        name: test-role

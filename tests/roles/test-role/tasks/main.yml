@@ -1,0 +1,36 @@
+- name: role - set fact
+  set_fact:
+    original_data: "some secret data"
+
+- name: role - generate key pair
+  marmorag.ansodium.ansodium:
+    keypair: true
+  register: keypair
+
+- assert:
+    that:
+      - "{{ keypair.public_key | length > 0 }}"
+      - "{{ keypair.private_key | length > 0}}"
+
+- name: role - encrypt data
+  marmorag.ansodium.ansodium:
+    pubkey: "{{ keypair.public_key }}"
+    data: "{{ original_data }}"
+  register: encrypt_output
+
+- assert:
+    that:
+      - "{{ encrypt_output.original_data == original_data }}"
+      - "{{ encrypt_output.encrypted | length > 0 }}"
+
+- name: role - decrypt data
+  marmorag.ansodium.ansodium:
+    encrypt: false
+    prikey: "{{ keypair.private_key }}"
+    data: "{{ encrypt_output.encrypted }}"
+  register: decrypt_output
+
+- assert:
+    that:
+      - "{{ decrypt_output.original_data == encrypt_output.encrypted }}"
+      - "{{ decrypt_output.decrypted == original_data }}"
