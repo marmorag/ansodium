@@ -11,7 +11,7 @@ So, ... I writed down a module. For now it is deadly simple, it just generate Ke
 
 
 If you want an example of what it looks like, then this is the roles which embbed it:
-```yamlex
+```yaml
 - name: Github - fetch project public key
   uri:
     url: "{{ github_api_repo_url }}/actions/secrets/public-key"
@@ -57,7 +57,7 @@ pip install pynacl
 
 Or use the provided `install` roles
 
-```yamlex
+```yaml
 roles:
     - { role: marmorag.ansodium.install }
 ```
@@ -97,7 +97,7 @@ Of course `PyNacl` python package is required in that case too.
 ---
 
 #### Generate keypair
-```yamlex
+```yaml
 - name: generate keypair
   ansodium:
     keypair: true
@@ -118,7 +118,7 @@ Output format :
 ---
 #### Encrypt
 
-```yamlex
+```yaml
 - name: encrypt data
   ansodium:
     pubkey: "<public key to encrypt with>"
@@ -140,7 +140,7 @@ Output format :
 ---
 #### Decrypt:
 
-```yamlex
+```yaml
 - name: decrypt data
   ansodium:
     encrypt: false 
